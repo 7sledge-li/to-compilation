@@ -1,0 +1,19 @@
+{
+  "name": "@sledge-li/to-compilation",
+  "version": "1.0.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "main": "index.ts",
+  "dependencies": {
+    "canvas": "^2.11.2",
+    "path": "^0.12.7"
+  },
+  "files":[
+    "index.ts"
+  ],
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  }
+}
