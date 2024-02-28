@@ -5,17 +5,17 @@ A helper for image type conversion and image compression.
 ## Install 安装
 
 ```bash
-yarn add @7sledge-li/to-compilation
+yarn add @sledgeli/to-compilation
 
 # or
 
-npm install --save @7sledge-li/to-compilation
+npm install --save @sledgeli/to-compilation
 ```
 
 ## Usage 使用示例，return 一个转换后的 File 文件对象
 
 ```js
-import { toTransform, toCompress } from "@sledge-li/to-compilation";
+import { toTransform, toCompress } from "@sledgeli/to-compilation";
 
 const fileUrl = ref("");
 const tarnsform = async () => {
