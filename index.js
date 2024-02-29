@@ -1,10 +1,5 @@
 // 格式转换处理后的图像转为文件输出
-function createFileFromDataURL(
-  dataURL: any,
-  toType: string,
-  fileName: any,
-  lastModified: any
-) {
+function createFileFromDataURL(dataURL, toType, fileName, lastModified) {
   return fetch(dataURL)
     .then((response) => response.blob())
     .then(
@@ -17,7 +12,7 @@ function createFileFromDataURL(
 }
 
 // 图像 url 转为 File 文件形式
-export function urlTransformToFile(url: string) {
+export function urlTransformToFile(url) {
   return fetch(url)
     .then((response) => response.blob())
     .then((blob) => {
@@ -32,7 +27,7 @@ export function urlTransformToFile(url: string) {
  * @param toType 传入的格式
  * @returns boolean true/false
  */
-function typeSupported(toType: string) {
+function typeSupported(toType) {
   const elem = document.createElement("canvas");
   return elem.toDataURL(`image/${toType}`).indexOf(`data:image/${toType}`) == 0;
 }
@@ -45,8 +40,8 @@ function typeSupported(toType: string) {
  * @returns 转换后的 File 文件对象
  */
 export async function toTransform(
-  fileOrUrl: File | string,
-  toType: string = "webp",
+  fileOrUrl,
+  toType = "webp",
   options = {
     quality: 1,
     color_space_conversion: true,
@@ -55,7 +50,7 @@ export async function toTransform(
   }
 ) {
   const isUrl = typeof fileOrUrl === "string";
-  let realFile: any = isUrl ? await urlTransformToFile(fileOrUrl) : fileOrUrl;
+  let realFile = isUrl ? await urlTransformToFile(fileOrUrl) : fileOrUrl;
   console.log(realFile, "realFile");
   const isTypeSupported = typeSupported(toType);
   const isToType = realFile.type === `image/${toType}`;
@@ -64,7 +59,7 @@ export async function toTransform(
       // 当浏览器支持 传入 格式且上传的图片不是 传入 格式的时候才需要做转换
       const reader = new FileReader();
       reader.onload = () => {
-        const pngImage: any = new Image();
+        const pngImage = new Image();
         pngImage.src = reader.result;
 
         const canvas = document.createElement("canvas");
@@ -80,7 +75,7 @@ export async function toTransform(
               reader.readAsDataURL(blob);
 
               reader.onloadend = () => {
-                const img: any = new Image();
+                const img = new Image();
                 img.src = reader.result;
 
                 img.onload = () => {
@@ -130,13 +125,13 @@ export async function toTransform(
  * @param quality 压缩质量
  * @returns 压缩后的 File 文件对象
  */
-export async function toCompress(fileOrUrl: File | string, quality = 0.8) {
+export async function toCompress(fileOrUrl, quality = 0.8) {
   const isUrl = typeof fileOrUrl === "string";
-  let realFile: any = isUrl ? await urlTransformToFile(fileOrUrl) : fileOrUrl;
+  let realFile = isUrl ? await urlTransformToFile(fileOrUrl) : fileOrUrl;
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (event) => {
-      const image: any = new Image();
+      const image = new Image();
       image.src = event.target?.result;
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");

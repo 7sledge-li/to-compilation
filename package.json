@@ -5,12 +5,10 @@
     "access": "public"
   },
   "type": "module",
-  "main": "index.ts",
+  "main": "index.js",
   "dependencies": {},
   "files": [
-    "index.ts"
+    "index.js"
   ],
-  "devDependencies": {
-    "typescript": "^5.2.2"
-  }
+  "devDependencies": {}
 }
