@@ -118,3 +118,62 @@ export async function toTransform(
     }
   });
 }
+
+/**
+ * 上传图片添加水印
+ * @param {*} file 图片文件
+ * @param {*} waterMarkText 水印文字
+ * @param {*} font 水印字号大小和字体
+ * @param {*} fillStyle 水印样式
+ * @returns
+ */
+export function toAddWaterMark(
+  file,
+  waterMarkText = " waterMark ",
+  font = "12px arial",
+  fillStyle = "rgba(255, 0, 0, .2)"
+) {
+  if (!file) {
+    return;
+  }
+  const type = file.type;
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    reader.onload = function (event) {
+      const img = new Image();
+      img.onload = function () {
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        ctx.font = font;
+        ctx.fillStyle = fillStyle;
+        ctx.textBaseline = "bottom";
+        ctx.transform(1, 0.5, -0.5, 1, 0, -canvas.height / 2);
+
+        const wmHeight = img.height / 6;
+        waterMarkText = Array(
+          Math.ceil(canvas.width / ctx.measureText(waterMarkText).width) * 2
+        ).join(waterMarkText);
+        for (let i = 0; i < Math.ceil(canvas.height / wmHeight) * 2; i++) {
+          ctx.fillText(waterMarkText, 0, i * wmHeight);
+        }
+
+        const dataURL = canvas.toDataURL(type);
+        createFileFromDataURL(dataURL, file.name, file.lastModified).then(
+          (result) => {
+            resolve(result);
+          }
+        );
+      };
+
+      img.src = event.target.result;
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
