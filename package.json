@@ -6,10 +6,7 @@
   },
   "type": "module",
   "main": "index.ts",
-  "dependencies": {
-    "canvas": "^2.11.2",
-    "path": "^0.12.7"
-  },
+  "dependencies": {},
   "files": [
     "index.ts"
   ],
